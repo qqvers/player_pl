@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  box-sizing: border-box;
+}
+body {
+  background-color: black;
+  color: white;
+}
+
+.button-nav {
+  @apply relative relative  h-20 p-3;
+}
+
+.button-nav:hover {
+  @apply text-playerColor;
+}
+
+.button-nav:hover::after {
+  @apply bg-playerColor  absolute bottom-0 left-0 h-[3px] w-[100%] content-[''];
+}
