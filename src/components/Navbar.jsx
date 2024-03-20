@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoMdLogIn } from "react-icons/io";
 import playerLogo from "../assets/player_logo.svg";
 import { FaSearch } from "react-icons/fa";
@@ -16,8 +16,15 @@ const navList = [
   "Moja lista",
 ];
 const Navbar = () => {
+  const [scrollTop, setScrollTop] = useState(false);
+  window.addEventListener("scroll", function () {
+    if (this.scrollY > 0 && !scrollTop) setScrollTop(true);
+    if (this.scrollY === 0 && scrollTop) setScrollTop(false);
+  });
   return (
-    <div className="fixed left-0 top-0 z-[100] mt-2 flex h-10 w-full items-center justify-between whitespace-nowrap bg-transparent px-4 pt-4 2xl:px-8">
+    <div
+      className={`fixed left-0 top-0 z-[100] flex h-16 w-full items-center justify-between whitespace-nowrap  px-4  2xl:px-8 ${scrollTop ? "bg-black" : "bg-transparent"}`}
+    >
       <IoMenuSharp size={30} className="block xl:hidden" />
       <div className="flex w-[60%] items-center justify-between lg:justify-center xl:w-full xl:justify-normal">
         <img src={playerLogo} alt="logo" className="w-18 mr-4 h-10" />

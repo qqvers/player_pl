@@ -11,7 +11,7 @@ body {
 }
 
 .button-nav {
-  @apply relative relative  h-20 p-3;
+  @apply relative relative  h-16 p-3;
 }
 
 .button-nav:hover {
@@ -19,5 +19,5 @@ body {
 }
 
 .button-nav:hover::after {
-  @apply bg-playerColor  absolute bottom-0 left-0 h-[3px] w-[100%] content-[''];
+  @apply absolute  bottom-0 left-0 h-[3px] w-[100%] bg-playerColor content-[''];
 }
