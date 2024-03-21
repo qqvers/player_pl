@@ -7,6 +7,7 @@ function App() {
     <div onScroll={(e) => e.preventDefault()}>
       <Navbar />
       <HomePage />
+
       <Footer />
     </div>
   );
