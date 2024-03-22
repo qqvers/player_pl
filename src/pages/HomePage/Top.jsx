@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import programs from "../../data/top_data";
 import { GoDotFill } from "react-icons/go";
 import { FaChevronLeft } from "react-icons/fa6";
+import Button from "../../components/Button";
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -54,7 +55,9 @@ const Top = () => {
                 <div className=" hidden pt-4 text-lg font-medium text-gray-400 md:block lg:w-[40%]">
                   {item.description}
                 </div>
-                <button className="hidden lg:block">TO DO LATER</button>
+                <div className="mt-8 hidden text-xl lg:block">
+                  <Button text="OGLĄDAJ" />
+                </div>
               </div>
 
               <div className="bottom-10 mx-4 flex h-12 w-full items-center justify-center pt-4 lg:relative lg:h-12 lg:w-full lg:justify-start lg:pr-6 2xl:ml-28">

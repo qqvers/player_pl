@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdLogIn } from "react-icons/io";
 import playerLogo from "../assets/player_logo.svg";
 import { FaSearch } from "react-icons/fa";
-import { IoMenuSharp } from "react-icons/io5";
+import MenuButton from "./MenuButton";
+
+import Button from "./Button";
 
 const navList = [
   "Seriale",
@@ -15,17 +17,41 @@ const navList = [
   "Więcej",
   "Moja lista",
 ];
+let scrollValue;
 const Navbar = () => {
   const [scrollTop, setScrollTop] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+
   window.addEventListener("scroll", function () {
-    if (this.scrollY > 0 && !scrollTop) setScrollTop(true);
-    if (this.scrollY === 0 && scrollTop) setScrollTop(false);
+    if (window.scrollY > 0 && !scrollTop && showMenu) setScrollTop(true);
+    if (window.scrollY > 0 && !scrollTop && !showMenu) setScrollTop(true);
+    if (window.scrollY === 0 && !scrollTop && !showMenu) setScrollTop(false);
+    scrollValue = window.scrollY;
   });
+
+  useEffect(() => {
+    if (!showMenu && scrollValue === 0) {
+      setScrollTop(false);
+    } else if (showMenu && scrollValue === 0) {
+      setScrollTop(true);
+    } else if (showMenu && scrollValue > 0) {
+      setScrollTop(true);
+    } else if (!showMenu && scrollValue > 0) {
+      setScrollTop(true);
+    }
+  }, [showMenu, scrollTop]);
+
   return (
     <div
       className={`fixed left-0 top-0 z-[100] flex h-16 w-full items-center justify-between whitespace-nowrap  px-4  2xl:px-8 ${scrollTop ? "bg-black" : "bg-transparent"}`}
     >
-      <IoMenuSharp size={30} className="block xl:hidden" />
+      <MenuButton
+        showMenu={showMenu}
+        setShowMenu={setShowMenu}
+        scrollTop={scrollTop}
+        setScrollTop={setScrollTop}
+      />
+
       <div className="flex w-[60%] items-center justify-between lg:justify-center xl:w-full xl:justify-normal">
         <img src={playerLogo} alt="logo" className="w-18 mr-4 h-10" />
         {navList.map((item, index) => (
@@ -51,9 +77,7 @@ const Navbar = () => {
           <button className="">Zaloguj</button>
         </div>
 
-        <button className=" rounded-lg bg-playerColor px-4 py-2 text-black hover:bg-playerColorHover">
-          Załóż konto
-        </button>
+        <Button text="ZAŁÓŻ KONTO" />
       </div>
     </div>
   );
