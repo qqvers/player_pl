@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Carousel from "./Carousel";
 import images_data from "../../data/random_photos";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import fnShuffleArray from "../../utils/fnShuffleArray";
 
 const FilmSection = ({ item }) => {
-  const images = images_data;
+  const [images, setImages] = useState(images_data);
   const [curr, setCurr] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    setImages(fnShuffleArray(images));
+  }, []);
 
   const handlePrevHover = () => {
     setIsHovered(true);

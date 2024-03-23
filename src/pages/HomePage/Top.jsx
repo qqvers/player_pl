@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import programs from "../../data/top_data";
+import programs from "../../data/programs_data";
 import { GoDotFill } from "react-icons/go";
 import { FaChevronLeft } from "react-icons/fa6";
 import Button from "../../components/Button";

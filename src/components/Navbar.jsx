@@ -17,11 +17,13 @@ const navList = [
   "Kanały",
   "Więcej",
   "Moja lista",
+  "POZNAJ OFERTE PLAYER",
 ];
 let scrollValue;
 const Navbar = () => {
   const [scrollTop, setScrollTop] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [smallMenuStatus, setSmallMenuStatus] = useState(false);
 
   window.addEventListener("scroll", function () {
     if (window.scrollY > 0 && !scrollTop && showMenu) setScrollTop(true);
@@ -31,7 +33,9 @@ const Navbar = () => {
   });
 
   useEffect(() => {
-    if (!showMenu && scrollValue === 0) {
+    if (smallMenuStatus) {
+      setScrollTop(true);
+    } else if (!showMenu && scrollValue === 0) {
       setScrollTop(false);
     } else if (showMenu && scrollValue === 0) {
       setScrollTop(true);
@@ -57,11 +61,16 @@ const Navbar = () => {
         <div className="flex w-[60%] items-center justify-between lg:justify-center xl:w-full xl:justify-normal">
           <img src={playerLogo} alt="logo" className="w-18 mr-4 h-10" />
           {navList.map((item, index) => (
-            <NavbarItem item={item} key={index} />
+            <NavbarItem
+              item={item}
+              key={index}
+              setScrollTop={setScrollTop}
+              setSmallMenuStatus={setSmallMenuStatus}
+            />
           ))}
-          <button className="button-nav hidden font-medium text-playerColor xl:block">
+          {/* <button className="button-nav hidden font-medium text-playerColor xl:block">
             POZNAJ OFERTE PLAYER
-          </button>
+          </button> */}
           <div className="relative">
             <input
               type="text"
