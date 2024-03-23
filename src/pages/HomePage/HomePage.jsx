@@ -1,6 +1,8 @@
 import React from "react";
 import Top from "./Top";
 import FilmSection from "./FilmSection";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 
 const dummyTitles = [
   "Lorem ipsum dolor sit amet",
@@ -26,10 +28,12 @@ const dummyTitles = [
 const HomePage = () => {
   return (
     <div>
+      <Navbar />
       <Top />
       {dummyTitles.map((item, index) => (
         <FilmSection key={index} item={item.toUpperCase()} />
       ))}
+      <Footer />
     </div>
   );
 };

@@ -4,6 +4,7 @@ import playerLogo from "../assets/player_logo.svg";
 import { FaSearch } from "react-icons/fa";
 import MenuButton from "./MenuButton";
 import NavbarItem from "./NavbarItem";
+import { Link } from "react-router-dom";
 
 import Button from "./Button";
 
@@ -68,9 +69,7 @@ const Navbar = () => {
               setSmallMenuStatus={setSmallMenuStatus}
             />
           ))}
-          {/* <button className="button-nav hidden font-medium text-playerColor xl:block">
-            POZNAJ OFERTE PLAYER
-          </button> */}
+
           <div className="relative">
             <input
               type="text"
@@ -83,10 +82,14 @@ const Navbar = () => {
         <div className="hidden lg:flex">
           <div className="mx-6 flex items-center hover:text-playerColor">
             <IoMdLogIn size={20} />
-            <button className="">Zaloguj</button>
+            <Link to="/login">
+              <button className="">Zaloguj</button>
+            </Link>
           </div>
 
-          <Button text="ZAŁÓŻ KONTO" />
+          <Link to="/signup">
+            <Button text="ZAŁÓŻ KONTO" />
+          </Link>
         </div>
       </div>
       <div
