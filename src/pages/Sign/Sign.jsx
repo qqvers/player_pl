@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { FaArrowLeft } from "react-icons/fa";
 import tvn_logo from "../../assets/tvn.png";
 import sign_photo from "../../assets/sign_photo.jpg";
 import sign_photo_lg from "../../assets/sign_photo_lg.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Sign = ({ signup }) => {
   const [formData, setFormData] = useState({
@@ -14,50 +15,75 @@ const Sign = ({ signup }) => {
   });
 
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = () => {
+  const validateForm = () => {
     let errors = {};
+    let formIsValid = true;
 
     if (signup) {
       if (!formData.name.trim()) {
         errors.name = "Imię jest wymagane";
-      } else {
-        errors.name = "";
+        formIsValid = false;
       }
 
-      if (!formData.repeatEmail.trim()) {
-        errors.repeatEmail = "Powtórz e-mail";
-      } else if (
-        JSON.stringify(formData.repeatEmail) !== JSON.stringify(formData.email)
+      if (
+        !formData.repeatEmail.trim() ||
+        formData.repeatEmail !== formData.email
       ) {
         errors.repeatEmail = "Adresy e-mail nie pasują do siebie";
-      } else {
-        errors.repeatEmail = "";
+        formIsValid = false;
       }
     }
 
-    if (!formData.email.trim()) {
-      errors.email = "E-mail jest wymagany";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    if (!formData.email.trim() || !/\S+@\S+\.\S+/.test(formData.email)) {
       errors.email = "Podany e-mail jest nieprawidłowy";
-    } else {
-      errors.email = "";
+      formIsValid = false;
     }
 
     if (!formData.password.trim()) {
       errors.password = "Hasło jest wymagane";
-    } else {
-      errors.password = "";
+      formIsValid = false;
     }
 
-    if (errors.length === 0) {
-      console.log("Formularz jest poprawny:", formData);
-    } else {
-      setErrors(errors);
+    setErrors(errors);
+    return formIsValid;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      const url = signup
+        ? "http://localhost:4000/signup"
+        : "http://localhost:4000/login";
+      const data = signup
+        ? {
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+          }
+        : { email: formData.email, password: formData.password };
+
+      axios
+        .post(url, data)
+        .then((response) => {
+          console.log("Odpowiedź serwera:", response.data);
+          sessionStorage.setItem("name", response.data.name);
+          sessionStorage.setItem("token", response.data.token);
+          if (!signup) {
+            sessionStorage.setItem("token", response.data.token);
+            navigate("/");
+          } else {
+            navigate("/login");
+          }
+        })
+        .catch((error) => {
+          console.error("Błąd:", error);
+        });
     }
   };
 
@@ -81,12 +107,12 @@ const Sign = ({ signup }) => {
             <img src={sign_photo} alt="" className="lg:hidden" />
 
             <div
-              className={`${!signup ? "lg:h-[30rem]" : "h-screen"} flex h-screen w-full flex-col items-center gap-4 rounded-b-md bg-white pt-4 lg:mx-4 lg:mb-8  lg:ml-16 lg:w-[20rem]`}
+              className={`${!signup ? "lg:h-[30rem]" : "h-screen"} flex h-screen w-full flex-col items-center gap-4 rounded-b-md bg-white pt-4 lg:mx-4 lg:mb-8 lg:ml-16 lg:w-[20rem]`}
             >
               <span className="text-2xl font-bold">
                 {signup ? "Zarejestruj się" : "Zaloguj się"}
               </span>
-              <span className=" text-center">
+              <span className="text-center">
                 {signup
                   ? "Wpisz swój adres e-mail oraz hasło i zaakceptuj wymagane zgody, aby utworzyć nowe konto"
                   : "Wpisz swój e-mail oraz hasło do Konta TVN"}
@@ -97,7 +123,7 @@ const Sign = ({ signup }) => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="Imie"
+                  placeholder="Imię"
                   className="w-[19rem] rounded-md border border-slate-300 p-3"
                 />
               )}
@@ -121,7 +147,7 @@ const Sign = ({ signup }) => {
                   name="repeatEmail"
                   value={formData.repeatEmail}
                   onChange={handleChange}
-                  placeholder="Powtorz e-mail"
+                  placeholder="Powtórz e-mail"
                   className="w-[19rem] rounded-md border border-slate-300 p-3"
                 />
               )}
@@ -143,14 +169,16 @@ const Sign = ({ signup }) => {
                 onClick={handleSubmit}
                 className="relative flex w-[19rem] cursor-pointer items-center justify-center rounded-md bg-[#008cff] p-3 text-white"
               >
-                UTWÓRZ KONTO
+                {signup ? "UTWÓRZ KONTO" : "ZALOGUJ SIĘ"}
                 <FaArrowLeft
                   size={20}
                   className="absolute right-0 mr-2 rotate-180"
                 />
               </div>
               <div className="flex w-[19rem] items-center justify-between">
-                <span>Masz już Konto TVN?</span>
+                <span>
+                  {signup ? "Masz już Konto TVN?" : "Nie masz konta?"}
+                </span>
                 {signup ? (
                   <Link
                     to="/login"
@@ -176,7 +204,7 @@ const Sign = ({ signup }) => {
           />
         </div>
       </div>
-      <div className=" bg-gray-200 px-8 py-4 text-center text-black">
+      <div className="bg-gray-200 px-8 py-4 text-center text-black">
         <span className="p-3">© 2024 TVN</span>
         <span className="p-3">O nas</span>
         <span className="p-3">Reklama </span>
