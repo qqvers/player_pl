@@ -3,6 +3,7 @@ import { IoMenuSharp } from "react-icons/io5";
 import { IoPersonOutline } from "react-icons/io5";
 import footer_img from "../assets/footer_img.png";
 import { IoClose } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 const MenuButton = ({ showMenu, setShowMenu }) => {
   const handleMenuButton = () => {
@@ -29,7 +30,9 @@ const MenuButton = ({ showMenu, setShowMenu }) => {
       >
         <div className=" flex items-center pb-8 pl-4">
           <IoPersonOutline className="mr-4 h-10 w-10 rounded-full bg-playerColor p-3 text-black" />
-          <span className="italic">Zaloguj się</span>
+          <Link to="/login" className="cursor-pointer italic">
+            Zaloguj się
+          </Link>
         </div>
         <span className="cursor-pointer pl-4">Moje konto</span>
         <div className=" w-full bg-gray-700 p-[0.5px]"></div>
