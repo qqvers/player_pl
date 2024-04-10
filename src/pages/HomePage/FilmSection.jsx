@@ -3,6 +3,7 @@ import Carousel from "./Carousel";
 import images_data from "../../data/random_photos";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import fnShuffleArray from "../../utils/fnShuffleArray";
+import { Link } from "react-router-dom";
 
 const FilmSection = ({ item }) => {
   const [images, setImages] = useState(images_data);
@@ -39,9 +40,10 @@ const FilmSection = ({ item }) => {
       </div>
       <Carousel curr={curr}>
         {images.map((item) => (
-          <div
+          <Link
             key={item.id}
             className="relative flex h-full w-[300px] flex-col  border-playerColor bg-black p-4 hover:border "
+            to={`/selected/${item.id}/photos`}
           >
             <img
               src={item.image}
@@ -49,7 +51,7 @@ const FilmSection = ({ item }) => {
               className="mr-5 h-full w-full cursor-pointer rounded-lg object-cover"
             />
             <p className="font-semibold">{item.title}</p>
-          </div>
+          </Link>
         ))}
       </Carousel>
 

@@ -84,7 +84,9 @@ const Navbar = () => {
         />
 
         <div className="flex w-[60%] items-center justify-between lg:justify-center xl:w-full xl:justify-normal">
-          <img src={playerLogo} alt="logo" className="w-18 mr-4 h-10" />
+          <Link to="/">
+            <img src={playerLogo} alt="logo" className="w-18 mr-4 h-10" />
+          </Link>
           {navList.map((item, index) => (
             <NavbarItem
               item={item}

@@ -3,6 +3,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import programs from "../../data/programs_data";
 import fnShuffleArray from "../../utils/fnShuffleArray";
 import PlayerPhoto from "../../components/PlayerPhoto";
+import { Link } from "react-router-dom";
 
 const SeasonSection = () => {
   return (
@@ -19,15 +20,19 @@ const SeasonSection = () => {
           </button>
         </div>
 
-        <div className="flex h-[40rem] flex-col overflow-hidden overflow-y-scroll">
+        <div className="flex h-[40rem] flex-col overflow-hidden overflow-y-scroll lg:h-[60rem]">
           {fnShuffleArray(programs).map((item) => (
-            <div className="grid cursor-pointer grid-cols-3" key={item.id}>
+            <Link
+              to={`/selected/${item.id}`}
+              className="grid cursor-pointer grid-cols-3"
+              key={item.id}
+            >
               <PlayerPhoto item={item} hover="no" />
               <div className="col-span-2 self-center text-sm md:text-lg">
                 <p>{item.header}</p>
                 <p className="text-gray-400">{item.description}</p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
@@ -38,7 +43,8 @@ const SeasonSection = () => {
         </h1>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {fnShuffleArray(programs).map((item, index) => (
-            <div
+            <Link
+              to={`/selected/${item.id}`}
               className={`cursor-pointer ${index >= 4 ? "hidden lg:block" : ""}`}
               key={item.id}
             >
@@ -46,7 +52,7 @@ const SeasonSection = () => {
               <p className="ml-4 truncate text-sm font-semibold">
                 {item.header}
               </p>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

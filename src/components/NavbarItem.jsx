@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import programs from "../data/programs_data";
 import PlayerPhoto from "./PlayerPhoto";
 import fnShuffleArray from "../utils/fnShuffleArray";
+import { Link } from "react-router-dom";
 
 const NavbarItem = ({ item, setScrollTop, setSmallMenuStatus }) => {
   const [hoveredButton, setHoveredButton] = useState(false);
@@ -19,6 +20,7 @@ const NavbarItem = ({ item, setScrollTop, setSmallMenuStatus }) => {
       setScrollTop(false);
     }
   }, [hoveredButton, hoverMenu]);
+
   return (
     <>
       <button
@@ -59,7 +61,12 @@ const NavbarItem = ({ item, setScrollTop, setSmallMenuStatus }) => {
             </p>
             <div className="grid grid-cols-3 pt-2">
               {fnShuffleArray(programs.slice(0, 6)).map((item) => (
-                <PlayerPhoto item={item} key={item.id} />
+                <Link to={`/selected/${item.id}`} key={item.id}>
+                  <PlayerPhoto
+                    item={item}
+                    onClick={() => fnHandlePhotoSelection(item.id)}
+                  />
+                </Link>
               ))}
             </div>
           </div>

@@ -12,6 +12,10 @@ import footer_img from "../assets/footer_img.png";
 
 const Footer = () => {
   const [showRozwin, setShowRozwin] = useState(false);
+  function handleRozwin() {
+    setShowRozwin((prev) => !prev);
+    window.scrollTo(0, document.body.scrollHeight);
+  }
 
   return (
     <div
@@ -78,7 +82,7 @@ const Footer = () => {
       </div>
       <div className="col-span-2 mb-2 hidden h-[0.5px] w-[95%] bg-gray-700 sm:block lg:hidden" />
       <button
-        onClick={() => setShowRozwin((prevState) => !prevState)}
+        onClick={handleRozwin}
         className="ml-16 hidden h-[4rem] w-[5rem] flex-col   items-center justify-center justify-self-end rounded-sm border border-playerColor text-playerColor lg:flex"
       >
         <p>{showRozwin ? "Zwiń" : "Rozwiń"}</p>
