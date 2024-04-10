@@ -5,7 +5,7 @@ const Top = ({ selectedItem }) => {
   return (
     <>
       <div
-        className={`h-[400px]  overflow-hidden md:h-[500px] lg:h-[500px] 2xl:h-[850px]`}
+        className={`h-[400px]  overflow-hidden md:h-[500px] lg:h-[600px] 2xl:h-[700px]`}
       >
         <div
           key={selectedItem.id}
@@ -21,7 +21,15 @@ const Top = ({ selectedItem }) => {
               className="h-full w-full object-cover"
               alt="photo_top"
             />
-            <div className="absolute left-0 top-[75%] ml-4 w-full -translate-y-1/2 transform text-left text-3xl font-bold text-white md:top-[36%] md:text-5xl lg:top-[50%] lg:pl-4 lg:text-left lg:text-4xl 2xl:pl-32">
+            <div className="absolute left-0 top-[75%] ml-4 w-full -translate-y-1/2 transform text-left text-3xl font-bold text-white md:top-[36%] md:ml-20 md:text-5xl lg:top-[50%] lg:pl-4 lg:text-left lg:text-4xl ">
+              <div className="relative mt-48 hidden lg:block">
+                <img
+                  src={selectedItem.photo}
+                  alt={selectedItem.header}
+                  className="mb-8 h-auto w-[12rem] rounded-md lg:w-[20rem]"
+                />
+                <div className="absolute inset-0 top-auto h-2/3 w-[15rem] from-transparent to-black md:bg-gradient-to-b lg:w-[20rem] " />
+              </div>
               <div className="hidden md:block lg:w-1/2">
                 {selectedItem.header}
               </div>
